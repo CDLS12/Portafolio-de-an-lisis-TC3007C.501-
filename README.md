@@ -13,6 +13,7 @@ Modulo 2
 Modulo 3
 - NLP_A01275316_Carlos David.pdf (Documentacion del entregable final NLP chatGPT Reconocedor de voz con
 ChatGPT: Whisper)
+- MA1.m4a (Audio a transcribir en el modelo)
 - whisper_summarize.py (Codigo elaborado para la creacion del reporte final NLP chatGPT)
 
 Modulo 4
