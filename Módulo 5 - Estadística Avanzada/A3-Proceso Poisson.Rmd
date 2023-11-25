@@ -1,0 +1,134 @@
+---
+title: "A3-Proceso Poisson"
+author: "Carlos David Lozano Sanguino - A01275316"
+date: "2023-10-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Problema 1
+
+El tiempo de llegada a una ventanilla de toma de órdenes desde un automóvil de un cierto comercio de hamburguesas sigue un proceso de Poisson con un promedio de 12 llegadas por hora.
+
+$\lambda_0=12$
+
+X: Numero de Ordenes
+
+## a) ¿Cuál será la probabilidad de que el tiempo de espera de tres personas sea a lo más de 20 minutos?
+
+Pregunta: P(t<1/3)
+X = 3
+Distribucion: Gamma
+
+$\lambda=3$
+```{r}
+cat("P(t<1/3)=",pgamma(1/3,3,12))
+```
+## b) ¿Cuál es la probabilidad de que el tiempo de espera de una persona esté entre 5 y 10 segundos?
+
+Pregunta: P(5/3600<t<10/3600)
+
+Distribucion: Exponencial
+
+```{r}
+p1 = pexp(10/3600,12)-pexp(5/3600,12)
+cat("P(5/3600<t<10/3600)=",p1)
+```
+## c) ¿Cuál será la probabilidad de que en 15 minutos lleguen a lo más tres personas?
+Pregunta: $P(X\leq3)$
+
+Distribucion: Poisson $\lambda=12*\frac{1}{4}=3$
+
+```{r}
+cat("P(X<=3)",ppois(3,3))
+```
+
+## d) ¿Cuál es la probabilidad de que el tiempo de espera de tres personas esté entre 5 y 10 segundos?
+
+Pregunta: P(10/3600<t<5/3600)
+
+Distribucion: Gamma: $\alpha=3$ y $\beta=\frac{1}{12}$
+
+```{r}
+p3 = pgamma(10/3600,3,12)-pgamma(5/3600,3,12)
+cat("P(10/3600<t<5/3600)",p3)
+```
+
+## e) Determine la media y varianza del tiempo de espera de tres personas.
+
+```{r}
+mu = 3/12
+
+var = 3*(1/12)^2
+cat("Media =",mu, "Varianza",var)
+```
+
+## f) ¿Cuál será la probabilidad de que el tiempo de espera de tres personas exceda una desviación estándar arriba de la media?
+
+Pregunta: $P(t>\mu+\sigma)$
+
+```{r}
+p4 = 1-pgamma(mu+sqrt(var),3,12)
+cat("P(t>mu+sigma) = ",p4)
+```
+
+# Problema 2
+
+Una masa radioactiva emite partículas de acuerdo con un proceso de Poisson con una razón promedio de 15 partículas por minuto. En algún punto inicia el reloj.
+
+$\lambda_0=15$
+
+X: Numero de Emisiones
+
+## a) ¿Cuál es la probabilidad de que en los siguientes 3 minutos la masa radioactiva emita 30 partículas?
+
+```{r}
+lambda = 15  # Tasa promedio de partículas por minuto
+k = 30       # Número de partículas deseado
+tiempo = 3    # Tiempo en minutos
+
+# Calcula la probabilidad usando la distribución de Poisson
+probabilidad3 = dpois(k, lambda * tiempo)
+probabilidad3
+
+```
+## b) ¿Cuál es la probabilidad de que transcurran cinco segundos a lo más antes de la siguiente emisión?
+
+```{r}
+lambda = 15  # Tasa promedio de partículas por minuto
+time = 5 / 60  # Tiempo en minutos (5 segundos)
+
+# Calcula la probabilidad usando la distribución exponencial
+probabilidad5 = 1 - exp(-lambda * time)
+probabilidad5
+
+```
+
+## c) ¿Cuánto es la mediana del tiempo de espera de la siguiente emisión?
+```{r}
+lambda <- 15  # Tasa promedio de partículas por minuto
+
+# Calcula la mediana usando la distribución exponencial
+mediana = qexp(0.5, rate = lambda)
+mediana
+```
+
+## d) ¿Cuál es la probabilidad de que transcurran a lo más cinco segundos antes de la segunda emisión?
+
+```{r}
+lambda = 15
+x = 1/12
+probabilidadd <- 1-pexp(x, lambda)
+cat("El resultado correcto es: ",probabilidadd)
+```
+
+## e) ¿En que rango se encuentra el 50% del tiempo central que transcurre antes de la segunda emisión?
+```{r}
+percentil_25 = qexp(0.25, rate = 15)
+percentil_75 =  qexp(0.75, rate = 15)
+cat("Rango del 50% del tiempo central antes de la segunda emisión:",
+    percentil_25, "a", percentil_75, "\n")
+```

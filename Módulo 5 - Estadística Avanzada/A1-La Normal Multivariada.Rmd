@@ -1,0 +1,57 @@
+---
+title: "A1-La Normal Multivariada"
+author: "Carlos David Lozano Sanguino - A01275316"
+date: "2023-09-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+```
+# 1. Hallar el procedimiento para el cálculo de probabilidad de que P(X1 <= 2, X2 <= 3) con X1, X2 se distribuyen Normal con  miu = (miu_1 = 2.5, miu_2 = 4) y Simga = [1.2, 0, 0, 2.3].
+```{r}
+library(mnormt)
+x = c(2,3)
+miu = c(2.5, 4)
+sigma = matrix(c(1.2, 0, 0, 2.3),nrow = 2)
+pmnorm(x,miu,sigma)
+```
+# 2. Grafique la anterior distribución bivariada del problema 1
+```{r}
+library(mnormt)
+x     <- seq(2.5-3*sqrt(1.2), 2.5+3*sqrt(1.2), 0.1) 
+y     <- seq(4-3*sqrt(2.3), 4+3*sqrt(2.3), 0.1)
+miu   <- c(2.5, 4)
+sigma <- matrix(c(1.2, 0, 0, 2.3),nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), miu, sigma)
+z     <- outer(x, y, f)
+#create surface plot
+persp(x, y, z, theta=-30, phi=25, expand=0.6, ticktype='detailed', col = "pink")
+```
+
+# 3. Grafique los contornos de la anterior distribución normal bivariada correspondiente a las alturas de  0.01,  0.03, 0.05, 0.07, 0.09
+```{r}
+library(mnormt)
+x     <- seq(2.5-3*sqrt(1.2), 2.5+3*sqrt(1.2), 0.1) 
+y     <- seq(4-3*sqrt(2.3), 4+3*sqrt(2.3), 0.1)
+miu   <- c(2.5, 4)
+sigma <- matrix(c(1.2, 0, 0, 2.3),nrow = 2)
+f     <- function(x, y) dmnorm(cbind(x, y), miu, sigma)
+z     <- outer(x, y, f)
+#create contour plot
+contour(x, y, z, col = "blue", levels = c(0.01,  0.03, 0.05, 0.07, 0.09))
+```
+
+# 3. Comenta tus resultados: 
+
+## ¿cómo se relaciona el resultado del primer inciso con el segundo? 
+
+R = El resultado del primer inciso (0.08257) representa la probabilidad conjunta de que las variables aleatorias X1 y X2 sean menores o iguales a 2 y 3, respectivamente. Esta probabilidad está relacionada con el gráfico del segundo inciso, ya que el gráfico de superficie (en el segundo inciso) visualiza la distribución de probabilidad conjunta de X1 y X2 en todo su rango. Como se puede ver en la grafica, el valor 0.08257 es la probabilidad de que X1 y X2 caigan en una región específica de ese gráfico de superficie siendo el punto en el que casi llega la grafica.
+
+## ¿cómo se relacionan los gráficos de los incisos 2 y 3?
+
+R = Los gráficos de los incisos 2 y 3 están relacionados en el sentido de que ambos representan la misma distribución de probabilidad conjunta de las variables X1 y X2. El gráfico del segundo inciso (gráfico de superficie) muestra visualmente cómo se distribuye la probabilidad en función de los valores de X1 y X2 en todo su rango. Por otro lado, los gráficos del tercer inciso (gráficos de contorno) también representan la misma distribución de probabilidad, pero de manera diferente. Muestran líneas que conectan puntos de igual probabilidad en el espacio X1-X2 y permiten identificar regiones de alta y baja probabilidad. En resumen,uno se puede ver en una diferente dimension a la otra mientras que la ultima nos deja ver ñas areas y rangos de cada probabilidad.
